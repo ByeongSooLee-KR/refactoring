@@ -1,9 +1,11 @@
-const adjustCapital = anInstrument => {
-  let result = 0
+const adjustCapital = (anInstrument) => {
+  let result = 0;
   if (anInstrument.capital > 0) {
     if (anInstrument.interestRate > 0 && anInstrument.duration > 0) {
-      result = (anInstrument.income / anInstrument.duration) * anInstrument.adjustmentFactor
+      result =
+        (anInstrument.income / anInstrument.duration) *
+        anInstrument.adjustmentFactor;
     }
   }
-  return result
-}
+  return result;
+};
