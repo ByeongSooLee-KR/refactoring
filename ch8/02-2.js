@@ -1,20 +1,23 @@
 class Account {
   _number;
   _type;
-  _interestRate;
-  constructor(number, type, interestRate) {
+  constructor(number, type) {
     this._number = number;
     this._type = type;
-    this._interestRate = interestRate;
   }
   get interestRate() {
-    return this._interestRate;
+    return this._type.interestRate;
   }
 }
 class AccountType {
   _name;
-  constructor(nameString) {
+  _interestRate;
+  constructor(nameString, _interestRate) {
     this._name = nameString;
+    this._interestRate = _interestRate;
+  }
+  get interestRate() {
+    return this._interestRate;
   }
 }
 const minus = new AccountType("마통");
