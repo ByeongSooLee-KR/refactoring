@@ -5,18 +5,30 @@ const scenario = {
   delay: 40,
 };
 
-const distanceTravelled = (scenario, time) => {
-  let result;
-  let acc = scenario.primaryForce / scenario.mass; // (a = F / m)
-  let primaryTime = Math.min(time, scenario.delay);
-  result = 0.5 * acc * primaryTime ** 2;
-  let secondaryTime = time - scenario.delay;
-  if (secondaryTime > 0) {
-    let primaryVelocity = acc * scenario.delay;
-    acc = (scenario.primaryForce + scenario.secondaryForce) / scenario.mass;
-    result += primaryVelocity * secondaryTime + 0.5 * acc * secondaryTime ** 2;
-  }
-  return result;
+// 가속도 = 힘 / 무게
+const acceleration = (force, mass) => force / mass;
+
+// 가속운동시 거리 = 1/2 * a * t^2
+const acceleratedDistance = (acc, time) => (acc * time ** 2) / 2;
+
+// 등속운동시 거리 = 속도 * 시간
+const sameVelocityDistance = (velocity, time) => velocity * time;
+
+const distanceTravelled = (
+  { primaryForce, secondaryForce, mass, delay },
+  time
+) => {
+  const primaryAcceleration = acceleration(primaryForce, mass);
+  const secondaryAcceleration = acceleration(
+    primaryForce + secondaryForce,
+    mass
+  );
+  const secondaryTime = Math.max(time - delay, 0);
+  return (
+    acceleratedDistance(primaryAcceleration, Math.min(time, delay)) +
+    acceleratedDistance(secondaryAcceleration, secondaryTime) +
+    sameVelocityDistance(primaryAcceleration * delay, secondaryTime)
+  );
 };
 
 console.log(distanceTravelled(scenario, 100));
