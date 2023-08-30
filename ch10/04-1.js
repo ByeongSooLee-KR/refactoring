@@ -1,29 +1,63 @@
 const feathers = (birds) => new Map(birds.map((b) => [b.name, feather(b)]));
 const velocities = (birds) => new Map(birds.map((b) => [b.name, velocity(b)]));
 
-const feather = (bird) => {
+class Bird {
+  constructor(bird) {
+    Object.assign(this, bird);
+  }
+  get feather() {
+    return "알수없음";
+  }
+  get velocity() {
+    return null;
+  }
+}
+class EuropeanSwallow extends Bird {
+  get feather() {
+    return "보통";
+  }
+  get velocity() {
+    return 35;
+  }
+}
+class AfricalSwallow extends Bird {
+  numberOfCoconuts;
+  get feather() {
+    return this.numberOfCoconuts > 2 ? "지침" : "보통";
+  }
+  get velocity() {
+    return 40 - 2 * this.numberOfCoconuts;
+  }
+}
+class NorwegianBlueParrot extends Bird {
+  voltage;
+  isNailed;
+  get feather() {
+    return this.voltage > 100 ? "그을림" : "예쁨";
+  }
+  get velocity() {
+    return this.isNailed ? 0 : 10 + this.voltage / 10;
+  }
+}
+
+const createBird = (bird) => {
   switch (bird.type) {
     case "유럽 제비":
-      return "보통";
+      return new EuropeanSwallow(bird);
     case "아프리카 제비":
-      return bird.numberOfCoconuts > 2 ? "지침" : "보통";
+      return new AfricalSwallow(bird);
     case "노르웨이 파랑 앵무":
-      return bird.voltage > 100 ? "그을림" : "예쁨";
+      return new NorwegianBlueParrot(bird);
     default:
-      return "알수없음";
+      return new Bird(bird);
   }
 };
+
+const feather = (bird) => {
+  return createBird(bird).feather;
+};
 const velocity = (bird) => {
-  switch (bird.type) {
-    case "유럽 제비":
-      return 35;
-    case "아프리카 제비":
-      return 40 - 2 * bird.numberOfCoconuts;
-    case "노르웨이 파랑 앵무":
-      return bird.isNailed ? 0 : 10 + bird.voltage / 10;
-    default:
-      return null;
-  }
+  return createBird(bird).velocity;
 };
 
 const birds = [
