@@ -5,20 +5,16 @@
 const setOffAlarms = () => {
   console.warn("악당을 찾았소");
 };
-// 두 가지 일을 하고 있음 (악당을 찾는 로직과 호출하는 로직)
+
+const findMiscreant = (people) =>
+  people.find((p) => p === "조커" || p === "사루만");
+
 const alertForMiscreant = (people) => {
-  for (const p of people) {
-    if (p === "조커") {
-      setOffAlarms();
-      return "조커";
-    }
-    if (p === "사루만") {
-      setOffAlarms();
-      return "사루만";
-    }
+  if (findMiscreant(people) !== "") {
+    setOffAlarms();
   }
-  return "";
 };
+
 alertForMiscreant([
   "슈퍼맨",
   "배트맨",
