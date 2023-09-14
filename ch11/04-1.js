@@ -1,3 +1,5 @@
+//11-04 객체 통째로 넘기기
+
 class TemperatureRange {
   high;
   low;
@@ -19,18 +21,17 @@ class HeatingPlan {
   constructor(low, high) {
     this._temperatureRange = new TemperatureRange(low, high);
   }
-  withinRange(bottom, top) {
+  withinRange(range) {
     return (
-      bottom >= this._temperatureRange.low && top <= this._temperatureRange.high
+      range.bottom >= this._temperatureRange.low &&
+      range.top <= this._temperatureRange.high
     );
   }
 }
 
 const client = () => {
   const plan = new HeatingPlan(21, 25);
-  const low = room.daysTempRange.low;
-  const high = room.daysTempRange.high;
-  if (!plan.withinRange(low, high)) {
+  if (!plan.withinRange(room.daysTempRange)) {
     console.log("방 온도가 지정 범위를 벗어났습니다.");
   } else {
     console.log("적정 온도입니다.");
